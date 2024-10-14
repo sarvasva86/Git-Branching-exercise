@@ -1,0 +1,134 @@
+Part 1
+
+1. What git command creates a branch? 
+    	git checkout -b
+
+2.  What is the difference between a fast-forward and recursive merge? 
+	fast forwards can only happen if there have not been commits on the original branch while the new branch is being worked on
+
+3.  What git command changes to another branch? 
+	git checkout
+
+4.  What git command deletes a branch? 
+	git branch -D
+
+5.  How do merge conflicts happen?
+	When Git can not determine what file or folder to choose when merging since there have been different commits with changes to the same file
+
+
+Part 2 
+
+Practice with fast forward and recursive merges! Make a branch and add and commit onto it and merge it back into master.
+
+Try to create your own merge conflict by modifying the same file on two separate commits on two separate branches.
+
+Solution :
+
+Step 1: Set Up Your Repository
+		
+		Create a new Git repository:
+			
+			C:\Users\amita>mkdir my-git-practice
+
+			C:\Users\amita>cd my-git-practice
+
+			C:\Users\amita\my-git-practice>git init
+				Initialized empty Git repository in C:/Users/amita/my-git-practice/.git/
+		
+		Create a file and make an initial commit:
+
+			C:\Users\amita\my-git-practice>echo "Hello, world!" > file.txt
+
+			C:\Users\amita\my-git-practice>git add file.txt
+
+			C:\Users\amita\my-git-practice>git commit -m "Initial commit"
+				[master (root-commit) cef3880] Initial commit
+				1 file changed, 1 insertion(+)
+ 				create mode 100644 file.txt
+
+Step 2: Create a Branch and Make Changes
+		
+		Create a new branch:
+			
+			C:\Users\amita\my-git-practice>git checkout -b feature-branch
+				Switched to a new branch 'feature-branch'
+			
+		
+		Modify the file and commit the changes:
+			
+			C:\Users\amita\my-git-practice>echo "Changes from feature branch" >> file.txt
+
+			C:\Users\amita\my-git-practice>git add file.txt
+
+			C:\Users\amita\my-git-practice>git commit -m "Update file in feature branch"
+				[feature-branch ac75061] Update file in feature branch
+ 				1 file changed, 1 insertion(+)
+				
+
+Step 3: Merge the Branch Back into Master
+
+		Switch back to the master branch:
+		
+			C:\Users\amita\my-git-practice>git checkout master
+				Switched to branch 'master'
+
+			Merge the feature branch:
+
+				C:\Users\amita\my-git-practice>git merge feature-branch
+				Updating cef3880..ac75061
+				Fast-forward
+				 file.txt | 1 +
+ 				1 file changed, 1 insertion(+)
+
+C:\Users\amita\my-git-practice>git log --oneline
+ac75061 (HEAD -> master, feature-branch) Update file in feature branch
+cef3880 Initial commit
+
+
+Step 4: Create a Merge Conflict
+
+			Create another branch from master:
+				C:\Users\amita\my-git-practice>git checkout -b conflict-branch
+				Switched to a new branch 'conflict-branch'
+
+			Modify the same line in the file:
+				
+				C:\Users\amita\my-git-practice>echo "Conflict from conflict branch" >> file.txt
+
+				C:\Users\amita\my-git-practice>git add file.txt
+
+				C:\Users\amita\my-git-practice>git commit -m "Update file in conflict branch"
+				[conflict-branch 9b0b24b] Update file in conflict branch
+ 				1 file changed, 1 insertion(+)
+				
+				
+Step 5: Merge the Conflict Branch into Master
+
+
+			Merge the conflict branch:
+
+				C:\Users\amita\my-git-practice>git merge conflict-branch
+				Auto-merging file.txt
+				CONFLICT (content): Merge conflict in file.txt
+				Automatic merge failed; fix conflicts and then commit the result.
+
+Step 6: Resolve the Merge Conflict
+			
+			C:\Users\amita\my-git-practice>git add file.txt
+
+			C:\Users\amita\my-git-practice>git commit -m "Resolve merge conflict"
+			[master 92d6d8f] Resolve merge conflict
+
+
+C:\Users\amita\my-git-practice>git log --oneline
+92d6d8f (HEAD -> master) Resolve merge conflict
+a121536 Update file in master branch
+9b0b24b (conflict-branch) Update file in conflict branch
+ac75061 (feature-branch) Update file in feature branch
+cef3880 Initial commit
+
+
+
+
+
+
